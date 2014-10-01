@@ -75,6 +75,31 @@ describe('coinbase.account.generateReceiveAddress', function () {
     });
   });
 });
+describe('coinbase.accounts', function () {
+  it('should return the user\'s accounts', function (done) {
+    coinbase.accounts(function (err, data) {
+      if (err) return done(err);
+      log('data: ' + util.inspect(data, null, 5));
+      data.should.have.property('accounts');
+      data.should.have.property('total_count');
+      data.should.have.property('num_pages');
+      data.should.have.property('current_page');
+      done();
+    });
+  });
+});
+describe('coinbase.accounts.balance', function () {
+  it('should return the user\'s account balance', function (done) {
+    var account_id = 'SPECIFY_ME';
+    coinbase.accounts.balance(account_id, function (err, data) {
+      if (err) return done(err);
+      log('data: ' + util.inspect(data, null, 5));
+      data.should.have.property('amount');
+      data.should.have.property('currency');
+      done();
+    });
+  });
+});
 describe('coinbase.button', function () {
   it('should generate a new button', function (done) {
     var param = {
