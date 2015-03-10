@@ -9,6 +9,7 @@ var Coinbase = require('../lib/index');
 
 if (!process.env.COINBASE_API_KEY) throw new Error('You must specify a COINBASE_API_KEY environment variable to run tests');
 if (!process.env.COINBASE_API_SECRET) throw new Error('You must specify a COINBASE_API_SECRET environment variable to run tests');
+if (!process.env.COINBASE_ACCOUNT_ID) throw new Error('You must specify a COINBASE_ACCOUNT_ID environment variable to run tests');
 
 var coinbase = new Coinbase({
   APIKey: process.env.COINBASE_API_KEY,
@@ -90,8 +91,7 @@ describe('coinbase.accounts', function () {
 });
 describe('coinbase.accounts.balance', function () {
   it('should return the user\'s account balance', function (done) {
-    var account_id = 'SPECIFY_ME';
-    coinbase.accounts.balance(account_id, function (err, data) {
+    coinbase.accounts.balance(process.env.COINBASE_ACCOUNT_ID, function (err, data) {
       if (err) return done(err);
       log('data: ' + util.inspect(data, null, 5));
       data.should.have.property('amount');
